@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    tmpfs:
+      - /app/tmp/pids
+  worker:
+    build:
+      context: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+    tmpfs:
+      - /app/tmp/pids
+    depends_on:
+      - redis
+  redis:
+    image: redis:6-alpine
+    environment:
+      TZ: Asia/Tokyo
