@@ -5,7 +5,7 @@ using with or without ActiveJob.
 
 Apparently, using Sidekiq **without** ActiveJob reduces memory usage drastically.
 
-This a clean Rails 5.1.5 project using Ruby 2.4.3 and Sidekiq 5.1.1.
+This a clean Rails 8.0.2 project using Ruby 3.3.5 and Sidekiq 8.0.3.
 
 It simulates a specific use case where one background job enqueues thousands of sub jobs.
 
@@ -40,22 +40,21 @@ The results on my local dev environment are:
 ### 1000 times
 
 ```
-SidekiqMainJob with amount #1000. Total time taken: 3.59596179 sec. Total memory used: 90.5MB.
-SidekiqSubJob with index #999: 4.964172652 sec. Total memory used: 90.9MB.
+SidekiqMainJob with amount #1000: 0.47s. 99.6MB.
+SidekiqSubJob with index #999: 37.69s. 99.9MB.
 ```
 
 ### 10000 times
 
 ```
-SidekiqMainJob with amount #10000. Total time taken: 27.888882899 sec. Total memory used: 97.8MB.
-SidekiqSubJob with index #9999: 65.169397941 sec. Total memory used: 100.3MB.
+SidekiqMainJob with amount #10000: 18.27s. 100.7MB.
+SidekiqSubJob with index #9999: 5m 57.57s. 101.0MB.
 ```
 
 ### 100000 times
 
 ```
-SidekiqMainJob with amount #100000. Total time taken: 316.123098262 sec. Total memory used: 135.9MB.
-SidekiqSubJob with index #99999: 466.372994784 sec. Total memory used: 142.8MB.
+TBC
 ```
 
 ## ActiveJob with Sidekiq Adapter
@@ -63,20 +62,19 @@ SidekiqSubJob with index #99999: 466.372994784 sec. Total memory used: 142.8MB.
 ### 1000 times
 
 ```
-MainJob with amount #1000. Total time taken: 10.414916688 sec. Total memory used: 92.3MB.
-SubJob with index #999: 10.929477986 sec. Total memory used: 92.3MB.
+MainJob with amount #1000: 10.33s. 107.1MB.
+SubJob with index #999: 1m 16.61s. 106.6MB.
 ```
 
 ### 10000 times
 
 ```
-MainJob with amount #10000. Total time taken: 48.659713855 sec. Total memory used: 116.6MB.
-SubJob with index #9999: 129.917127836 sec. Total memory used: 122.4MB.
+MainJob with amount #10000: 1m 56.89s. 106.3MB.
+SubJob with index #9999: 12m 16.24s. 105.2MB.
 ```
 
 ### 100000 times
 
 ```
-MainJob with amount #100000. Total time taken: 1129.007123868 sec. Total memory used: 307.8MB.
-SubJob with index #99999: 1129.604909318 sec. Total memory used: 307.8MB.
+TBC
 ```

@@ -1,8 +1,9 @@
 class SidekiqSubJob
-  include Sidekiq::Worker
+  include Sidekiq::Job
+  include Logging
 
   def perform(index, queued_at, is_last)
-    puts "SidekiqSubJob with index ##{index}: #{Time.now - Time.at(queued_at)} sec. Total memory used: %.1fMB." % [`ps -o rss= -p #{$$}`.to_f/1024] if is_last
+    puts "SidekiqSubJob with index ##{index}: #{time_usage(queued_at)}. #{memory_usage}." if is_last
   end
 end
 
