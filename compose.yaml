@@ -13,7 +13,7 @@ services:
   worker:
     build:
       context: .
-    command: bundle exec sidekiq
+    command: bin/jobs
     volumes:
       - .:/rails
     depends_on:

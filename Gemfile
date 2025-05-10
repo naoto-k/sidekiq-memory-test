@@ -57,3 +57,5 @@ group :development do
 end
 
 gem "sidekiq", "~> 8.0"
+
+gem "mission_control-jobs", "~> 1.0"

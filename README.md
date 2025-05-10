@@ -78,3 +78,25 @@ SubJob with index #9999: 12m 16.24s. 105.2MB.
 ```
 TBC
 ```
+
+## ActiveJob with SolidQueue Adapter
+
+### 1000 times
+
+```
+MainJob with amount #1000: 46.77s. 99.2MB.
+SubJob with index #999: 2m 10.96s. 97.1MB.
+```
+
+### 10000 times
+
+```
+MainJob with amount #10000: 7m 56.25s. 101.7MB.
+SubJob with index #9999: 21m 30.36s. 101.1MB.
+```
+
+### 100000 times
+
+```
+TBC
+```
