@@ -10,10 +10,22 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
       REDIS_URL: redis://redis:6379/0
-  worker:
+      POSTGRES_HOST: postgres
+  solid_queue:
     build:
       context: .
-    command: bin/jobs
+    command: "bundle exec rails solid_queue:start"
+    volumes:
+      - .:/rails
+    environment:
+      TZ: Asia/Tokyo
+      RAILS_ENV: development
+      JOB_CONCURRENCY: 4
+      POSTGRES_HOST: postgres
+  sidekiq:
+    build:
+      context: .
+    command: bundle exec sidekiq
     volumes:
       - .:/rails
     depends_on:
@@ -22,8 +34,18 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
       REDIS_URL: redis://redis:6379/0
-      RAILS_MAX_THREADS: 10
   redis:
     image: redis:latest
     environment:
       TZ: Asia/Tokyo
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+volumes:
+  db-data:
+    driver: local

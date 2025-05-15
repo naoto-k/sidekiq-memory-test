@@ -1,0 +1,4 @@
+module Amount
+  AMOUNT_SUB_JOBS = 250_000
+  AMOUNT_EACH_SLICE = 100
+end

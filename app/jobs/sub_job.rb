@@ -1,6 +1,8 @@
 class SubJob < ApplicationJob
   include Logging
 
+  self.queue_adapter = :sidekiq
+
   queue_as :default
 
   def perform(index, queued_at, is_last)
