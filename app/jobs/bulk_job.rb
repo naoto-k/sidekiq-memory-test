@@ -1,0 +1,19 @@
+class BulkJob < ApplicationJob
+  include Logging
+  include Amount
+
+  self.queue_adapter = :sidekiq
+
+  queue_as :main
+
+  def perform(amount = AMOUNT_SUB_JOBS)
+    start_at = Time.now
+    amount.times.each_slice(AMOUNT_EACH_SLICE) do |index|
+      jobs = index.map do |i|
+        SubJob.new(i, start_at.to_i, i == amount - 1)
+      end
+      ActiveJob.perform_all_later(jobs)
+    end
+    puts "BulkJob with amount ##{amount}: #{time_usage(start_at)}. #{memory_usage}."
+  end
+end

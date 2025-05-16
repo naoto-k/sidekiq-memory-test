@@ -4,15 +4,12 @@ class MainJob < ApplicationJob
 
   self.queue_adapter = :sidekiq
 
-  queue_as :default
+  queue_as :main
 
   def perform(amount = AMOUNT_SUB_JOBS)
     start_at = Time.now
-    amount.times.each_slice(AMOUNT_EACH_SLICE) do |index|
-      jobs = index.map do |i|
-        SubJob.new(i, start_at.to_i, i == amount - 1)
-      end
-      ActiveJob.perform_all_later(jobs)
+    amount.times do |index|
+        SubJob.perform_later(index, start_at.to_i, index == amount - 1)
     end
     puts "MainJob with amount ##{amount}: #{time_usage(start_at)}. #{memory_usage}."
   end

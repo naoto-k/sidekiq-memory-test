@@ -20,12 +20,12 @@ services:
     environment:
       TZ: Asia/Tokyo
       RAILS_ENV: development
-      JOB_CONCURRENCY: 4
+      JOB_CONCURRENCY: 1
       POSTGRES_HOST: postgres
   sidekiq:
     build:
       context: .
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq -q main
     volumes:
       - .:/rails
     depends_on:
@@ -34,12 +34,13 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
       REDIS_URL: redis://redis:6379/0
+      RAILS_MAX_THREADS: 5
   redis:
-    image: redis:latest
+    image: redis:8.0.1
     environment:
       TZ: Asia/Tokyo
   postgres:
-    image: postgres:latest
+    image: postgres:17.5
     ports:
       - 5432:5432
     volumes:

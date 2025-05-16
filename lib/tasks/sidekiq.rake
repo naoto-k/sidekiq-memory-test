@@ -7,4 +7,13 @@ namespace :sidekiq do
       SidekiqMainJob.perform_async(ENV['JOBS'].to_i)
     end
   end
+
+  desc 'Performance test with Sidekiq (bulk)'
+  task :test_bulk => :environment do
+    if ENV['JOBS'].nil?
+      SidekiqBulkJob.perform_async
+    else
+      SidekiqBulkJob.perform_async(ENV['JOBS'].to_i)
+    end
+  end
 end

@@ -7,4 +7,13 @@ namespace :solid_queue do
       SolidQueueMainJob.perform_later(ENV['JOBS'].to_i)
     end
   end
+
+  desc 'SolidQueue performance test with ActiveJob (bulk)'
+  task :test_bulk => :environment do
+    if ENV['JOBS'].nil?
+      SolidQueueBulkJob.perform_later
+    else
+      SolidQueueBulkJob.perform_later(ENV['JOBS'].to_i)
+    end
+  end
 end

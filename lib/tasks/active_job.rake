@@ -7,5 +7,14 @@ namespace :active_job do
       MainJob.perform_later(ENV['JOBS'].to_i)
     end
   end
+
+  desc 'Performance test with ActiveJob (bulk)'
+  task :test_bulk => :environment do
+    if ENV['JOBS'].nil?
+      BulkJob.perform_later
+    else
+      BulkJob.perform_later(ENV['JOBS'].to_i)
+    end
+  end
 end
 

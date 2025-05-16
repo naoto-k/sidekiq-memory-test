@@ -3,7 +3,7 @@ class SolidQueueSubJob < ApplicationJob
 
   self.queue_adapter = :solid_queue
 
-  queue_as :default
+  queue_as :sub
 
   def perform(index, queued_at, is_last)
     puts "SolidQueueSubJob with index ##{index}: #{time_usage(queued_at)}. #{memory_usage}." if is_last
